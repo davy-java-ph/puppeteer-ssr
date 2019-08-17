@@ -1,7 +1,11 @@
 # puppeteer-ssr
 基于puppeteer的ssr简单实现
 
-## 配置文件例子
+## 配置文件
+
+默认配置文件名`ssr.config.js`,存放在运行文件同级目录
+
+格式
 ```javascript
 module.exports = {
     website: [  //网站
@@ -43,13 +47,16 @@ module.exports = {
     ]
 };
 ```
+使用外置配置文件启动
+
+`node index.js config=./test.js`
 
 
-## 外置配置文件
+## 快速开始
+
+```bash
+npm install
+npm run start
+```
 
 
-<<<<<<< HEAD
-node index.js config=./test.js
-=======
-node index.js config=./test.js
->>>>>>> 0735e0fa1ea6e3919d8cc3ef3e2937c445f66417
