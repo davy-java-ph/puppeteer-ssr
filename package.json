@@ -1,5 +1,5 @@
 {
-  "name": "ssr",
+  "name": "puppeteer-multi-page-ssr",
   "version": "1.0.0",
   "main": "main.js",
   "license": "MIT",
@@ -11,5 +11,17 @@
     "crypto": "^1.0.1",
     "puppeteer": "^1.19.0",
     "rxjs": "^6.5.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davy-java-ph/puppeteer-ssr"
+  },
+  "keywords": [
+    "puppeteer",
+    "ssr"
+  ],
+  "author": {
+    "name": "davy_java_ph",
+    "email": "davy.java.ph@gmail.com"
   }
 }

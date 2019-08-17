@@ -1,5 +1,6 @@
-# puppeteer-ssr
-基于puppeteer的ssr简单实现
+# puppeteer-multi-page-ssr
+基于puppeteer的ssr多页面简单实现
+
 
 ## 配置文件
 
@@ -11,8 +12,8 @@ module.exports = {
     website: [  //网站
         {
             url: {
-                'https://github.com/': './html/github.html'
-            },  //url {网址：预渲染后html存放路径}
+                'https://github.com/': './html/github.html'  
+            },  //url {网址：预渲染后html存放路径,为空时不保存}
             //页面打开后等待  2000ms
             // （'.carousel-inner .item-img img'|//body/img） 选择器或xpath元素出现
             // () => !!document.querySelector('.foo') 方法返回true，执行上下文为浏览器windows

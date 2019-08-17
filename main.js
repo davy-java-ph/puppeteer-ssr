@@ -94,7 +94,7 @@ async function ssr(url, options = {}, browser) {
         }, stylesheetContents);
     }
 
-    if (options.screenshot){
+    if (options.screenshot) {
         await createDir(options.screenshot);
         await page.screenshot({path: options.screenshot, fullPage: true});
     }
@@ -190,21 +190,23 @@ async function htmlHandle(response, config, dist) {
                 html = item(html);
             });
         }
-        createDir(dist).then(error => {
-            if (error) {
-                console.log(error);
-                reject(error);
-            } else {
-                fs.writeFile(dist, html, 'utf-8', err => {
-                    if (!err) {
-                        console.log('success');
-                        resolve(true);
-                    } else {
-                        reject(err);
-                    }
-                });
-            }
-        });
+        if (!dist) {
+            resolve(html);
+        } else {
+            createDir(dist).then(error => {
+                if (error) {
+                    reject(error);
+                } else {
+                    fs.writeFile(dist, html, 'utf-8', err => {
+                        if (!err) {
+                            resolve(html);
+                        } else {
+                            reject(err);
+                        }
+                    });
+                }
+            });
+        }
     }));
 }
 
@@ -219,7 +221,6 @@ function ssrWebsite(website, browser) {
     });
     return merge(...ssr$);
 }
-
 
 
 function readConfig() {
