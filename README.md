@@ -1,4 +1,5 @@
-
+# puppeteer-ssr
+基于puppeteer的ssr简单实现
 
 ## 配置文件例子
 ```javascript
@@ -47,4 +48,8 @@ module.exports = {
 ## 外置配置文件
 
 
+<<<<<<< HEAD
 node index.js config=./test.js
+=======
+node index.js config=./test.js
+>>>>>>> 0735e0fa1ea6e3919d8cc3ef3e2937c445f66417
