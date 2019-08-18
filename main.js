@@ -227,7 +227,7 @@ function readConfig() {
     if (configFiles.length) {
         return require(configFiles[configFiles.length - 1]);
     } else {
-        return require(__dirname + '/ssr.config');
+        return require(process.cwd() + '/ssr.config');
     }
 
 }
