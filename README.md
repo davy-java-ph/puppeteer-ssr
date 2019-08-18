@@ -1,6 +1,13 @@
 # puppeteer-multi-page-ssr
 基于puppeteer的ssr多页面简单实现
 
+## use
+```bash
+npm install puppeteer-multi-page-ssr
+npm ssr
+# or 
+npm ssr config=./test.js
+```
 
 ## 配置文件
 
@@ -49,12 +56,9 @@ module.exports = {
 };
 ```
 使用外置配置文件启动
-
 `node index.js config=./test.js`
 
-
 ## 快速开始
-
 ```bash
 npm install
 npm run start
