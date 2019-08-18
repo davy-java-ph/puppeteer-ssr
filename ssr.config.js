@@ -2,13 +2,14 @@ module.exports = {
     website: [  //网站
         {
             url: {
-                'https://github.com/': './html/github.html'
+                'https://github.com/': './html/github.html',
+                'https://www.google.com/':'./html/index.html'
             },  //url {网址：预渲染后html存放路径}
             //页面打开后等待  2000ms
             // （'.carousel-inner .item-img img'|//body/img） 选择器或xpath元素出现
             // () => !!document.querySelector('.foo') 方法返回true，执行上下文为浏览器windows
             waitFor: 1,
-            screenshot:'./html/github.png', //页面完全准备就绪后截图记录
+            screenshot:'./html/', //截图路径  页面完全准备就绪后截图记录 ，为空时不截图
             stylesheet: {  //是否执行link css合并到html
                 test: /css(\?|$)/,   //需要生成md5的文件规则
                 // sameOrigin: true //仅限同源
@@ -16,11 +17,15 @@ module.exports = {
             javascript: {  //是否执行javascript 合并到html
                 test: /js(\?|$)/,   //需要生成md5的文件规则
                 sameOrigin: true,  //仅限同源
+                //匹配层级，比如当前html页面存在字符串 /../images/home/threeAndOne_commit.png ，实际服务端资源路径存在http://google.com/assets/images/home/threeAndOne_commit.png
+                //匹配三级即为 /images/home/threeAndOne_commit.png===/images/home/threeAndOne_commit.png 返回true，被视为同一文件，自动附加md5
                 level: 3
             },
             base64: {     //是否执行图片base64转换
                 test: /(png|jpg)(\?|$)/,   //图片匹配规则
                 maxSize: 1024 * 300,     //最大转换多大的图片 1024*1 =1kb
+                //匹配层级，比如当前html页面存在字符串 /../images/home/threeAndOne_commit.png ，实际服务端资源路径存在http://google.com/assets/images/home/threeAndOne_commit.png
+                //匹配三级即为 /images/home/threeAndOne_commit.png===/images/home/threeAndOne_commit.png 返回true，被视为同一文件，自动附加md5
                 level: 3
             },
             md5: {               //是否为文件生成md5指纹，防止缓存

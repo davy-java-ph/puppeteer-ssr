@@ -1,5 +1,5 @@
 const {merge, of} = require("rxjs");
-const {switchMap, tap} = require("rxjs/operators");
+const {switchMap, tap,map} = require("rxjs/operators");
 const {fromPromise} = require("rxjs/internal-compatibility");
 
 const puppeteer = require('puppeteer');
@@ -12,7 +12,7 @@ let stylesheetContents = {};
 let javascriptContents = {};
 let md5List = {};
 let base64 = {};
-var arguments = process.argv.splice(2);
+let arguments = process.argv.splice(2);
 const configArg = "config=";
 const configFiles = arguments.filter(item => item.startsWith(configArg)).map(item => item.substring(configArg.length));
 
@@ -95,8 +95,12 @@ async function ssr(url, options = {}, browser) {
     }
 
     if (options.screenshot) {
-        await createDir(options.screenshot);
-        await page.screenshot({path: options.screenshot, fullPage: true});
+        const screenshotFile = `${options.screenshot.replace(/\/$/,'')}/${new Date().getTime()}.png`;
+        await createDir(screenshotFile);
+        await page.screenshot({
+            path: screenshotFile,
+            fullPage: true
+        });
     }
 
     return await page.content();
@@ -215,7 +219,9 @@ function ssrWebsite(website, browser) {
     let ssr$ = [];
     Object.keys(urlConfig).forEach(url => {
         let observable = fromPromise(ssr(url, website, browser)).pipe(switchMap(html => {
-            return fromPromise(htmlHandle(html, website, urlConfig[url]));
+            return fromPromise(htmlHandle(html, website, urlConfig[url])).pipe(map(response => {
+                return {[url]: response};
+            }));
         }));
         ssr$.push(observable);
     });
@@ -235,7 +241,11 @@ function readConfig() {
 
 const config = readConfig();
 
-module.exports = () => of(config.website).pipe(switchMap(list => {
+/**
+ *
+ * @returns {Observable<{object}>} {[url]:html}
+ */
+const ssrFunc = () => of(config.website).pipe(switchMap(list => {
     let ssr = [];
     list.forEach(website => {
         ssr.push(fromPromise(createBrowser()).pipe(switchMap(browser => {
@@ -247,4 +257,6 @@ module.exports = () => of(config.website).pipe(switchMap(list => {
     });
     return merge(...ssr);
 }));
+
+module.exports = ssrFunc;
 

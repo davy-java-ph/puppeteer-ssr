@@ -1,12 +1,20 @@
 # puppeteer-multi-page-ssr
 基于puppeteer的ssr多页面简单实现
 
+抓取页面源码，添加静态文件指纹，转换较小图片为base64，合并同源css，js至html
+
 ## use
 ```bash
 npm install puppeteer-multi-page-ssr
 npm ssr
 # or 
 npm ssr config=./test.js
+```
+### node api调用
+```js
+const ssr = require('puppeteer-multi-page-ssr');
+//@returns {Observable<{object}>} {[url]:html}
+ssr(); 
 ```
 
 ## 配置文件
